@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState, AppDispatch } from '../../components/store';
-import { setTheme } from '../../components/preferencesSlice';
-import { themes } from '../../components/theme';
+import { RootState, AppDispatch } from '../../store/store';
+import { setTheme } from '../../store/preferencesSlice';
+import { themes } from '../../store/theme';
 
 const CaregiverScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();

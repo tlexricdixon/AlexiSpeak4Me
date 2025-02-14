@@ -1,16 +1,16 @@
-import { Stack } from 'expo-router';
+import React from 'react';
 import { Provider } from 'react-redux';
-import { store, persistor } from '../components/store';
 import { PersistGate } from 'redux-persist/integration/react';
-import TopNav from '../components/TopNav';
+import { store, persistor } from '../store/store';
+import { Stack } from 'expo-router';
 
-export default function Layout() {
+export default function RootLayout() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <TopNav /> {/* ✅ Persistent Top Navigation */}
-        <Stack screenOptions={{ headerShown: false }} />
+        <Stack />
       </PersistGate>
     </Provider>
   );
 }
+

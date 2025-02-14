@@ -1,31 +1,45 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Image } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { addWord, removeWord, selectWords, resetWords } from '../../components/wordSlice';
-import * as ImagePicker from 'expo-image-picker';
+import React from 'react';
+import { View, Text, Switch, StyleSheet } from 'react-native';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../store/store';
+import { setTheme } from '../../store/preferencesSlice';
 
-export default function CaregiverSettings() {
-  const words = useSelector(selectWords);
-  const dispatch = useDispatch();
-  const [newWord, setNewWord] = useState('');
-  const [image, setImage] = useState('');
+const SettingsScreen: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({ mediaTypes: ImagePicker.MediaTypeOptions.Images });
-    if (!result.canceled) setImage(result.uri);
+  // ✅ Provide default value to prevent `undefined` errors
+  const theme = useSelector((state: RootState) => state.preferences?.theme || 'light');
+
+  const handleThemeChange = (value: boolean) => {
+    dispatch(setTheme(value ? 'dark' : 'light'));
   };
 
   return (
-    <View>
-      <Text>Add a Word</Text>
-      <TextInput placeholder="Word" value={newWord} onChangeText={setNewWord} />
-      <Button title="Pick Image" onPress={pickImage} />
-      {image && <Image source={{ uri: image }} style={{ width: 100, height: 100 }} />}
-      <Button title="Add Word" onPress={() => dispatch(addWord({ id: Date.now().toString(), text: newWord, image }))} />
-      <Button title="Reset Words" onPress={() => dispatch(resetWords())} />
+    <View style={styles.container}>
+      <Text style={styles.text}>Settings Screen</Text>
+
+      {/* Theme Toggle */}
+      <View style={styles.row}>
+        <Text style={styles.label}>Dark Mode</Text>
+        <Switch
+          value={theme === 'dark'}
+          onValueChange={handleThemeChange}
+        />
+      </View>
     </View>
   );
-}
+};
+
+// ✅ Ensure styles are properly defined
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  text: { fontSize: 20, fontWeight: 'bold' },
+  row: { flexDirection: 'row', alignItems: 'center', marginTop: 20 },
+  label: { fontSize: 18, marginRight: 10 },
+});
+
+export default SettingsScreen;
+
 
 
 
