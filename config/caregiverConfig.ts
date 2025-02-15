@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CommunicationItem, defaultWords } from './wordsConfig';
+import { CommunicationItem, defaultWords } from './defaultData.ts';
 
 const STORAGE_KEY = 'caregiverWords';
 

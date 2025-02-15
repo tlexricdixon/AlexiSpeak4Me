@@ -1,0 +1,8 @@
+Refactor Communication Screen
+
+Ensure it pulls words from SQLite instead of wordsConfig.ts.
+Keep category sorting dynamic.
+Ensure Redux Syncs with SQLite
+
+Load stored words from SQLite on app start.
+Ensure changes in Redux persist to SQLite.

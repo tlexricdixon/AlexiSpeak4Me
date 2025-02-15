@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import * as Speech from 'expo-speech';
-import { CommunicationItem } from '@/config/wordsConfig';// ✅ Import CommunicationItem from shared type file
+import { CommunicationItem } from '../../interfaces/CommunicationItem'; 
 
 /**
  * Constants for swipe detection.

@@ -1,75 +1,77 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CommunicationItem, defaultWords } from '../config/wordsConfig';
-import { loadCaregiverWords, saveCaregiverWords, resetCaregiverWords } from '../config/caregiverConfig';
+import { CommunicationItem } from '../interfaces/CommunicationItem';
 
 /**
- * 🔹 Redux State for Words
- * - Holds word list and loading state.
+ * 🟢 Initial Redux State for Words
  */
 interface WordsState {
-  words: CommunicationItem[];
+  words: CommunicationItem[]; // ✅ Active words
+  inactiveWords: CommunicationItem[]; // ✅ Inactive words
 }
 
-/**
- * 🔹 Initial State
- * - Uses `defaultWords` to **avoid async issues**.
- */
 const initialState: WordsState = {
-  words: defaultWords, // ✅ Loads default words immediately
+  words: [],
+  inactiveWords: [], // ✅ Store for inactive words
 };
 
 /**
  * 🟢 Redux Slice for Managing Words
- * - Handles adding, removing, and resetting words.
  */
 const wordSlice = createSlice({
   name: 'words',
   initialState,
   reducers: {
     /**
-     * ✅ Load words from AsyncStorage **without awaiting**.
-     * - Calls `loadCaregiverWords()`, but **Redux updates synchronously**.
+     * ✅ Replace Active & Inactive Words in Redux Store
      */
-    loadWords: (state) => {
-      loadCaregiverWords().then((storedWords) => {
-        if (storedWords) {
-          state.words = storedWords; // ✅ Updates words asynchronously
-        }
-      });
+    setWordsFromStorage: (state, action: PayloadAction<{ active: CommunicationItem[]; inactive: CommunicationItem[] }>) => {
+      state.words = action.payload.active;
+      state.inactiveWords = action.payload.inactive;
     },
 
     /**
-     * ✅ Add a new word (text + image).
-     * - Saves words in AsyncStorage **after Redux updates**.
+     * ✅ Add a Word (Redux Only)
      */
     addWord: (state, action: PayloadAction<CommunicationItem>) => {
       state.words.push(action.payload);
-      saveCaregiverWords(state.words); // ✅ Saves in background (async)
     },
 
     /**
-     * ✅ Remove a word by ID.
-     * - Updates state immediately, saves asynchronously.
+     * ✅ Deactivate a Word (Move to `inactiveWords`)
      */
-    removeWord: (state, action: PayloadAction<string>) => {
-      state.words = state.words.filter((word: CommunicationItem) => word.id !== action.payload);
-      saveCaregiverWords(state.words);
+    deactivateWord: (state, action: PayloadAction<string>) => {
+      const wordIndex = state.words.findIndex((w) => w.id === action.payload);
+      if (wordIndex !== -1) {
+        const word = { ...state.words[wordIndex], isActive: false };
+        state.words.splice(wordIndex, 1);
+        state.inactiveWords.push(word);
+      }
     },
 
     /**
-     * ✅ Reset words to default.
-     * - Calls `resetCaregiverWords()` asynchronously.
+     * ✅ Reactivate a Word (Move back to `words`)
      */
-    resetWords: (state) => {
-      state.words = defaultWords;
-      resetCaregiverWords(); // ✅ Resets AsyncStorage
+    reactivateWord: (state, action: PayloadAction<string>) => {
+      const wordIndex = state.inactiveWords.findIndex((w) => w.id === action.payload);
+      if (wordIndex !== -1) {
+        const word = { ...state.inactiveWords[wordIndex], isActive: true };
+        state.inactiveWords.splice(wordIndex, 1);
+        state.words.push(word);
+      }
     },
   },
 });
 
-// ✅ Export Redux Actions
-export const { loadWords, addWord, removeWord, resetWords } = wordSlice.actions;
+// ✅ Export Actions
+export const { setWordsFromStorage, addWord, deactivateWord, reactivateWord } = wordSlice.actions;
+
+// ✅ Export Reducer
 export default wordSlice.reducer;
+
+
+
+
+
 
 
 

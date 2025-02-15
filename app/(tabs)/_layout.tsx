@@ -1,7 +1,9 @@
 import { Tabs } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
-// 🔹 Define icons for navigation
+/**
+ * 🔹 Define icons for navigation
+ */
 const tabIcons: Record<string, keyof typeof Ionicons.glyphMap> = {
   home: 'home-outline',
   communication: 'chatbubbles-outline',
@@ -19,6 +21,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: 'gray',
         tabBarStyle: { backgroundColor: 'white' },
         tabBarPosition: 'top', // ✅ Moves tabs to the top
+        headerShown: false, // ✅ Removes "(tabs)" from the top
       })}
     >
       <Tabs.Screen name="home" options={{ title: 'Home' }} />
@@ -27,3 +30,4 @@ export default function TabLayout() {
     </Tabs>
   );
 }
+
