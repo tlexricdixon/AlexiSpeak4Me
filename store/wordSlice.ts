@@ -1,46 +1,75 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CommunicationItem, defaultWords } from '../config/wordsConfig';
+import { loadCaregiverWords, saveCaregiverWords, resetCaregiverWords } from '../config/caregiverConfig';
 
-
-
-// Define a TypeScript interface for a communication word
-export interface CommunicationItem {
-  id: string;
-  text: string;
-  image: any; // Can be a local require() or a URI from caregiver uploads
+/**
+ * 🔹 Redux State for Words
+ * - Holds word list and loading state.
+ */
+interface WordsState {
+  words: CommunicationItem[];
 }
 
-// Default words (Will be customizable in Caregiver Mode)
-const initialState: { words: CommunicationItem[] } = {
-  words: [
-    { id: '1', text: 'Eat', image: require('../assets/images/eat.png') },
-    { id: '2', text: 'Drink', image: require('../assets/images/drink.png') },
-    { id: '3', text: 'Restroom', image: require('../assets/images/restroom.png') },
-    { id: '4', text: 'Happy', image: require('../assets/images/happy.png') },
-    { id: '5', text: 'Sad', image: require('../assets/images/sad.png') },
-    { id: '6', text: 'Angry', image: require('../assets/images/angry.png') },
-    { id: '7', text: 'Yes', image: require('../assets/images/yes.png') },
-    { id: '8', text: 'No', image: require('../assets/images/no.png') },
-    { id: '9', text: 'Help', image: require('../assets/images/help.png') },
-  ],
+/**
+ * 🔹 Initial State
+ * - Uses `defaultWords` to **avoid async issues**.
+ */
+const initialState: WordsState = {
+  words: defaultWords, // ✅ Loads default words immediately
 };
 
-const wordsSlice = createSlice({
+/**
+ * 🟢 Redux Slice for Managing Words
+ * - Handles adding, removing, and resetting words.
+ */
+const wordSlice = createSlice({
   name: 'words',
   initialState,
   reducers: {
+    /**
+     * ✅ Load words from AsyncStorage **without awaiting**.
+     * - Calls `loadCaregiverWords()`, but **Redux updates synchronously**.
+     */
+    loadWords: (state) => {
+      loadCaregiverWords().then((storedWords) => {
+        if (storedWords) {
+          state.words = storedWords; // ✅ Updates words asynchronously
+        }
+      });
+    },
+
+    /**
+     * ✅ Add a new word (text + image).
+     * - Saves words in AsyncStorage **after Redux updates**.
+     */
     addWord: (state, action: PayloadAction<CommunicationItem>) => {
       state.words.push(action.payload);
+      saveCaregiverWords(state.words); // ✅ Saves in background (async)
     },
+
+    /**
+     * ✅ Remove a word by ID.
+     * - Updates state immediately, saves asynchronously.
+     */
     removeWord: (state, action: PayloadAction<string>) => {
-      state.words = state.words.filter((word) => word.id !== action.payload);
+      state.words = state.words.filter((word: CommunicationItem) => word.id !== action.payload);
+      saveCaregiverWords(state.words);
     },
-    updateWord: (state, action: PayloadAction<CommunicationItem>) => {
-      const index = state.words.findIndex((word) => word.id === action.payload.id);
-      if (index !== -1) state.words[index] = action.payload;
+
+    /**
+     * ✅ Reset words to default.
+     * - Calls `resetCaregiverWords()` asynchronously.
+     */
+    resetWords: (state) => {
+      state.words = defaultWords;
+      resetCaregiverWords(); // ✅ Resets AsyncStorage
     },
   },
 });
 
-export const { addWord, removeWord, updateWord } = wordsSlice.actions;
-export default wordsSlice.reducer;
+// ✅ Export Redux Actions
+export const { loadWords, addWord, removeWord, resetWords } = wordSlice.actions;
+export default wordSlice.reducer;
+
+
+

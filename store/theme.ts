@@ -1,15 +1,14 @@
 export const themes = {
-    light: {
-      background: '#F8F8F8',
-      text: '#000',
-      button: '#007AFF',
-      buttonText: '#FFF',
-    },
-    dark: {
-      background: '#121212',
-      text: '#FFF',
-      button: '#1E88E5',
-      buttonText: '#FFF',
-    },
-  };
-  
+  light: {
+    background: '#FFFFFF',
+    text: '#000000',
+    button: '#007BFF',
+    input: '#F0F0F0', // ✅ Add input background color
+  },
+  dark: {
+    background: '#121212',
+    text: '#FFFFFF',
+    button: '#BB86FC',
+    input: '#333333', // ✅ Add input background color
+  },
+};
