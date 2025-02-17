@@ -1,10 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import { View, Text, SectionList, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store'; // ✅ Redux Store
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../../store/store'; // ✅ Redux Store
 import CommunicationButton from '../../components/ui/CommunicationButtons';
 import { getCategorizedWords } from '../../utils/helpers/getCategorizedWords';
+import { syncDatabaseWithRedux } from '../../utils/helpers/syncDatabaseWithRedux';
+
 
 /**
  * ✅ CommunicationScreen Component
@@ -13,8 +15,15 @@ import { getCategorizedWords } from '../../utils/helpers/getCategorizedWords';
  * - Supports swipe gestures for interaction
  */
 const CommunicationScreen: React.FC = () => {
-  // ✅ Get words from Redux state
-  const words = useSelector((state: RootState) => state.words.words);
+  const dispatch = useDispatch<AppDispatch>();
+
+  // ✅ Get words from Redux state (ensuring default value to prevent crashes)
+  const words = useSelector((state: RootState) => state.words.words) || [];
+
+  // ✅ Ensure words load on component mount
+  useEffect(() => {
+    syncDatabaseWithRedux(dispatch);
+  }, [dispatch]);
 
   // 🟢 Optimize category processing using `useMemo`
   const categorizedWords = useMemo(() => getCategorizedWords(words), [words]);
@@ -69,14 +78,14 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     textAlign: 'left',
     paddingLeft: 10,
-    backgroundColor: '#E0E0E0', // ✅ Adds a subtle background color
-    paddingVertical: 5, // ✅ Better spacing
-    borderRadius: 5, // ✅ Rounded corners
+    backgroundColor: '#E0E0E0',
+    paddingVertical: 5,
+    borderRadius: 5,
   },
   row: {
-    flexDirection: 'row', // ✅ Ensures items are in a row
-    justifyContent: 'space-between', // ✅ Aligns items properly
-    marginVertical: 5, // ✅ Adds spacing between rows
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 5,
   },
 });
 

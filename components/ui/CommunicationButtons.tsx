@@ -3,7 +3,6 @@ import { Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
 import * as Speech from 'expo-speech';
 import { CommunicationItem } from '../../interfaces/CommunicationItem';
-import { resolveImagePath } from '../../utils/helpers/imageHelper'; // ✅ Import helper
 
 /**
  * CommunicationButton Component:
@@ -12,7 +11,12 @@ import { resolveImagePath } from '../../utils/helpers/imageHelper'; // ✅ Impor
  * - On swipe left: Triggers a function (e.g., remove word).
  */
 const CommunicationButton: React.FC<{ item: CommunicationItem; onSwipeLeft: () => void }> = ({ item, onSwipeLeft }) => {
-  const imageSource = resolveImagePath(item.image); // ✅ Resolve correct path
+  const imageSource = typeof item.image === 'string'
+  ? item.image.startsWith('file://') || item.image.startsWith('http')
+    ? { uri: item.image } // ✅ External file or network image
+    : require('../../assets/images/default.jpg') // ✅ Fallback image
+  : item.image; // ✅ Use local static images if applicable
+  //const imageSource = resolveImagePath(item.image); // ✅ Resolve correct path
 
   // ✅ Swipe gesture to remove word
   const swipeGesture = Gesture.Pan().onEnd(({ translationX }) => {
@@ -20,6 +24,7 @@ const CommunicationButton: React.FC<{ item: CommunicationItem; onSwipeLeft: () =
       onSwipeLeft();
     }
   });
+
 
   return (
     <GestureDetector gesture={swipeGesture}>

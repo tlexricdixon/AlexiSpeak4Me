@@ -11,7 +11,7 @@ interface WordsState {
 
 const initialState: WordsState = {
   words: [],
-  inactiveWords: [], // ✅ Store for inactive words
+  inactiveWords: [],// ✅ Store for inactive words
 };
 
 /**
@@ -25,10 +25,16 @@ const wordSlice = createSlice({
      * ✅ Replace Active & Inactive Words in Redux Store
      */
     // ✅ Replace words properly
-setWordsFromStorage: (state, action: PayloadAction<CommunicationItem[]>) => {
-  state.words = action.payload.filter(word => word.isActive);
-  state.inactiveWords = action.payload.filter(word => !word.isActive);
-},
+    setWordsFromStorage: (state, action: PayloadAction<CommunicationItem[] | undefined>) => {
+      if (!Array.isArray(action.payload)) {
+        console.error('🔴 Invalid data received in Redux store:', action.payload);
+        state. words= [];
+        state.inactiveWords = [];
+        return;
+      }
+      state.words= action.payload.filter(word => word.isActive);
+      state.inactiveWords = action.payload.filter(word => !word.isActive);
+    },
 
     /**
      * ✅ Add a Word (Redux Only)
