@@ -24,10 +24,11 @@ const wordSlice = createSlice({
     /**
      * ✅ Replace Active & Inactive Words in Redux Store
      */
-    setWordsFromStorage: (state, action: PayloadAction<{ active: CommunicationItem[]; inactive: CommunicationItem[] }>) => {
-      state.words = action.payload.active;
-      state.inactiveWords = action.payload.inactive;
-    },
+    // ✅ Replace words properly
+setWordsFromStorage: (state, action: PayloadAction<CommunicationItem[]>) => {
+  state.words = action.payload.filter(word => word.isActive);
+  state.inactiveWords = action.payload.filter(word => !word.isActive);
+},
 
     /**
      * ✅ Add a Word (Redux Only)

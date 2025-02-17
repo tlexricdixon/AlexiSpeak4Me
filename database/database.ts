@@ -36,15 +36,13 @@ export const initializeDatabase = async () => {
 /**
  * 🟢 Fetches Words Based on Active Status
  */
-export const getWordsFromDatabase = async (includeInactive = false): Promise<CommunicationItem[]> => {
+export const getWordsFromDatabase = async (): Promise<CommunicationItem[]> => {
   try {
-    const result = await db.getAllAsync(
-      `SELECT * FROM words WHERE isActive IN (${includeInactive ? '0,1' : '1'});`
-    );
+    const result = await db.getAllAsync(`SELECT * FROM words WHERE isActive = 1;`);
     return result.map((row: any) => ({
       id: row.id,
       text: row.text,
-      image: row.image,
+      image: row.image, // ✅ Keep stored as filename or `file://` path
       category: row.category,
       isFavorite: Boolean(row.isFavorite),
       isCustom: Boolean(row.isCustom),
@@ -59,6 +57,29 @@ export const getWordsFromDatabase = async (includeInactive = false): Promise<Com
     return [];
   }
 };
+export const getInactiveWordsFromDatabase = async (): Promise<CommunicationItem[]> => {
+  try {
+    const result = await db.getAllAsync(`SELECT * FROM words WHERE isActive = 0;`);
+
+    return result.map((row: any) => ({
+      id: row.id,
+      text: row.text,
+      image: row.image,
+      category: row.category,
+      isFavorite: Boolean(row.isFavorite),
+      isCustom: Boolean(row.isCustom),
+      isDefault: Boolean(row.isDefault),
+      order: row.orderIndex,
+      lastUsed: row.lastUsed ? Number(row.lastUsed) : null,
+      accessibilityLabel: `Image of ${row.text}`,
+      isActive: false, // ✅ Explicitly mark as inactive
+    }));
+  } catch (error) {
+    console.error('🔴 Error fetching inactive words:', error);
+    return [];
+  }
+};
+
 
 /**
  * 🟢 Inserts a New Word
