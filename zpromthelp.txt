@@ -1,0 +1,28 @@
+Prompt to Fix MODULE_NOT_FOUND Error in React Native
+"I'm running a React Native project and encountering the following error when trying to start the app:
+
+Error: Cannot find module '/Users/ricdixon/repo/AlexiSpeak4Me/iso'
+    at Module._resolveFilename (node:internal/modules/cjs/loader:1225:15)
+    at Module._load (node:internal/modules/cjs/loader:1051:27)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:173:12)
+    at node:internal/main/run_main_module:28:49 {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: []
+}
+Project Setup:
+Package Manager: [npm | yarn | pnpm] (Specify which one)
+React Native Version: (Run npx react-native --version)
+Node Version: (Run node -v)
+Package.json Dependencies: (Share relevant dependencies)
+Did you recently install or remove packages? (Yes/No)
+What command triggered the error? (e.g., npx react-native run-ios, npm start, etc.)
+Have you tried reinstalling node_modules? (Yes/No, and provide details)
+Troubleshooting Steps Already Taken:
+ Ran npm install or yarn install
+ Cleared Metro Bundler cache (npx react-native start --reset-cache)
+ Deleted node_modules & package-lock.json and reinstalled
+ Checked the package.json for missing dependencies
+ Ran npx react-native doctor and fixed issues
+ Verified if iso is a typo or misconfigured script in package.json
+What could be causing this issue, and how can I resolve it?"
+
