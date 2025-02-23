@@ -1,4 +1,4 @@
-import { CommunicationItem } from '../../interfaces/CommunicationItem';
+import { CommunicationItem } from '../interfaces/CommunicationItem';
 export const getCategorizedWords = (words: CommunicationItem[]) => {
   // ✅ Filter out inactive words
   const activeWords = words.filter((word) => word.isActive);

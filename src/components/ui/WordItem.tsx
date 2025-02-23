@@ -6,7 +6,6 @@ interface WordItemProps {
   onDeactivate?: (id: string) => void; // ✅ Optional prop for deactivation
   onReactivate?: (id: string) => void; // ✅ Optional prop for reactivation
 }
-
 /**
  * ✅ WordItem Component
  * - Displays a word with image.

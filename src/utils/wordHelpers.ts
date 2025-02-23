@@ -1,13 +1,13 @@
-import { AppDispatch } from '../../store/store';
-import { addWord,  setWordsFromStorage } from '../../store/wordSlice';
-import { CommunicationItem } from '../../interfaces/CommunicationItem';
+import { AppDispatch } from '../store/store';
+import { addWord,  setWordsFromStorage } from '../store/wordSlice';
+import { CommunicationItem } from '../interfaces/CommunicationItem';
 import {
   addWordToDatabase,
   deactivateWordInDatabase,
   resetWordsToDefault,
   reactivateWordInDatabase,
   getWordsFromDatabase,
-} from '../../database/database';
+} from '../database/database';
 
 /**
  * ✅ Adds a new word to SQLite & Redux
@@ -65,9 +65,11 @@ export const handleDeactivateWord = async (id: string, dispatch: AppDispatch) =>
 
     // ✅ Fetch updated words (only active ones)
     const updatedWords = await getWordsFromDatabase();
+    const active = updatedWords.filter(word => word.isActive);
+    const inactive = updatedWords.filter(word => !word.isActive);
 
     // ✅ Sync Redux with the latest words
-    dispatch(setWordsFromStorage(updatedWords));
+    dispatch(setWordsFromStorage({ active, inactive }));
 
     console.log(`✅ Word deactivated and removed from active list: ${id}`);
   } catch (error) {
@@ -90,7 +92,9 @@ export const handleReactivateWord = async (id: string, dispatch: AppDispatch) =>
     const updatedWords = await getWordsFromDatabase();
 
     // ✅ Dispatch updated word list to Redux
-    dispatch(setWordsFromStorage(updatedWords));
+    const active = updatedWords.filter(word => word.isActive);
+    const inactive = updatedWords.filter(word => !word.isActive);
+    dispatch(setWordsFromStorage({ active, inactive }));
 
     console.log(`✅ Word reactivated and UI updated: ${id}`);
   } catch (error) {
@@ -112,7 +116,9 @@ export const handleResetWords = async (dispatch: AppDispatch) => {
     const updatedWords = await getWordsFromDatabase();
 
     // ✅ Dispatch new word list to Redux
-    dispatch(setWordsFromStorage(updatedWords));
+    const active = updatedWords.filter(word => word.isActive);
+    const inactive = updatedWords.filter(word => !word.isActive);
+    dispatch(setWordsFromStorage({ active, inactive }));
 
     console.log('✅ Communication screen reset to defaults.');
   } catch (error) {

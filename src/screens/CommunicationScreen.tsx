@@ -2,10 +2,11 @@ import React, { useMemo, useEffect } from 'react';
 import { View, Text, SectionList, StyleSheet } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../store/store'; // ✅ Redux Store
-import CommunicationButton from '../../components/ui/CommunicationButtons';
-import { getCategorizedWords } from '../../utils/helpers/getCategorizedWords';
-import { syncDatabaseWithRedux } from '../../utils/helpers/syncDatabaseWithRedux';
+import { RootState, AppDispatch } from '../store/store'; // ✅ Redux Store
+import CommunicationButton from '../components/ui/CommunicationButtons';
+import { getCategorizedWords } from '../utils/getCategorizedWords';
+import { syncDatabaseWithRedux } from '../utils/syncDatabaseWithRedux';
+import { CommunicationItem } from '../interfaces/CommunicationItem';
 
 
 /**
@@ -18,7 +19,8 @@ const CommunicationScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   // ✅ Get words from Redux state (ensuring default value to prevent crashes)
-  const words = useSelector((state: RootState) => state.words.words) || [];
+  const active = useSelector((state: RootState) => state.words.activeWords) || [];
+  const inactiveword = useSelector((state: RootState) => state.words.inactiveWords) || [];
 
   // ✅ Ensure words load on component mount
   useEffect(() => {
@@ -26,7 +28,7 @@ const CommunicationScreen: React.FC = () => {
   }, [dispatch]);
 
   // 🟢 Optimize category processing using `useMemo`
-  const categorizedWords = useMemo(() => getCategorizedWords(words), [words]);
+  const categorizedWords = useMemo(() => getCategorizedWords(active), [active]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -48,12 +50,12 @@ const CommunicationScreen: React.FC = () => {
               const rowItems = section.data.slice(index, index + 3); // ✅ Get up to 3 items
               return (
                 <View style={styles.row}>
-                  {rowItems.map((rowItem) => (
-                    <CommunicationButton 
-                      key={rowItem.id} 
-                      item={rowItem} 
-                      onSwipeLeft={() => console.log(`Swiped Left: ${rowItem.text}`)}
-                    />
+                  {rowItems.map((rowItem: CommunicationItem) => (
+                  <CommunicationButton 
+                    key={rowItem.id} 
+                    item={rowItem} 
+                    onSwipeLeft={() => console.log(`Swiped Left: ${rowItem.text}`)}
+                  />
                   ))}
                 </View>
               );

@@ -15,3 +15,9 @@ export interface CommunicationItem {
     isActive: boolean; // ✅ Indicates if word is active or not  
   }
   
+// Reusable Navigation Button Component
+export interface NavigationButtonProps {
+  text: string;
+  color: string;
+  onPress: () => void;
+}

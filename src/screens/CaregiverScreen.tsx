@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../../store/store';
-import { themes } from '../../store/theme';
-import KeyboardWrapper from '../../components/KeyboardWrapper';
-import ThemeToggleButton from '../../components/ThemeToggleButton';
-import ImagePickerComponent from '../../components/ImagePickerComponent';
-import { handleAddWord, handleResetWords } from '../../utils/helpers/wordHelpers';
-import { deactivateWordInDatabase, reactivateWordInDatabase, getInactiveWordsFromDatabase } from '../../database/database';
-import { setupDatabaseAndLoadWords } from '../../utils/helpers/databaseSetup';
+import { RootState, AppDispatch } from '../store/store';
+import { themes } from '../store/theme';
+import KeyboardWrapper from '../components/KeyboardWrapper';
+import ThemeToggleButton from '../components/ThemeToggleButton';
+import ImagePickerComponent from '../components/ImagePickerComponent';
+import { handleAddWord, handleResetWords } from '../utils/wordHelpers';
+import { deactivateWordInDatabase, reactivateWordInDatabase, getInactiveWordsFromDatabase } from '../database/database';
+import { setupDatabaseAndLoadWords } from '../utils/databaseSetup';
 import { Picker } from '@react-native-picker/picker';
-import ActiveWordsTab from '../../components/ui/ActiveWordsTab'; // ✅ Import
-import InactiveWordsTab from '../../components/ui/InactiveWordsTab'; // ✅ Import
-import { CommunicationItem } from '../../interfaces/CommunicationItem';
+import ActiveWordsTab from '../components/ui/ActiveWordsTab'; // ✅ Import
+import InactiveWordsTab from '../components/ui/InactiveWordsTab'; // ✅ Import
+import { CommunicationItem } from '../interfaces/CommunicationItem';
 
 const categories = ['Basic Needs', 'Feelings', 'Responses', 'People', 'Places', 'Custom'];
 

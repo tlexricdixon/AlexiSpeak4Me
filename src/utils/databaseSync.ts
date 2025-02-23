@@ -1,12 +1,12 @@
-import { AppDispatch } from '../../store/store';
+import { AppDispatch } from '../store/store';
 import {
   getWordsFromDatabase,
   addWordToDatabase,
   deactivateWordInDatabase,
   reactivateWordInDatabase,
-} from '../../database/database';
-import { setWordsFromStorage, addWord, deactivateWord, reactivateWord } from '../../store/wordSlice';
-import { CommunicationItem } from '../../interfaces/CommunicationItem';
+} from '../database/database';
+import { setWordsFromStorage, addWord, deactivateWord, reactivateWord } from '../store/wordSlice';
+import { CommunicationItem } from '../interfaces/CommunicationItem';
 
 /**
  * 🟢 Syncs All Words to Redux (Active + Inactive)
