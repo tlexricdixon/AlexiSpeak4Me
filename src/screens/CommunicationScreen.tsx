@@ -18,9 +18,6 @@ import { CommunicationItem } from '../interfaces/CommunicationItem';
 const CommunicationScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  // ✅ Get words from Redux state (ensuring default value to prevent crashes)
-  const active = useSelector((state: RootState) => state.words.activeWords) || [];
-  const inactiveword = useSelector((state: RootState) => state.words.inactiveWords) || [];
 
   // ✅ Ensure words load on component mount
   useEffect(() => {
@@ -29,7 +26,9 @@ const CommunicationScreen: React.FC = () => {
 
   // 🟢 Optimize category processing using `useMemo`
   const categorizedWords = useMemo(() => getCategorizedWords(active), [active]);
-
+  useEffect(() => {
+    dispatch(syncDatabaseWithRedux());
+  }, [dispatch]);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <View style={styles.container}>

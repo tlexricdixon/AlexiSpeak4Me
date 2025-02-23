@@ -1,27 +1,13 @@
 import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './src/screens/HomeScreen';
-import CommunicationScreen from './src/screens/CommunicationScreen';
+import { Provider } from 'react-redux';
+import { store } from './src/store/store';
+import Navigation from './src/navigation/Navigation';
 
-const Stack = createStackNavigator();
-
-const App = () => {
+const App: React.FC = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen}
-          options={{ title: 'Home' }}
-        />
-        <Stack.Screen
-          name="Communication"
-          component={CommunicationScreen}
-          options={{ title: 'Communication' }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <Navigation />
+    </Provider>
   );
 };
 
