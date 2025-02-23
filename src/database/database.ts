@@ -1,4 +1,4 @@
-import * as SQLite from 'expo-sqlite';
+import * as SQLite from 'react-native-sqlite-storage';
 import { CommunicationItem } from '../interfaces/CommunicationItem';
 import { defaultWords } from '../config/defaultData';
 
@@ -6,7 +6,7 @@ import { defaultWords } from '../config/defaultData';
  * ✅ Open the SQLite Database (Correct Method for Your Expo Version)
  * - Uses `openDatabaseSync()` instead of `openDatabase()`.
  */
-const db = SQLite.openDatabaseSync('communication.db');
+const dbPromise = SQLite.openDatabase({ name: 'communication.db' });
 
 
 /**
@@ -15,7 +15,8 @@ const db = SQLite.openDatabaseSync('communication.db');
  */
 export const initializeDatabase = async () => {
   try {
-    await db.execAsync(`drop table if exists words `); // ✅ Enable foreign keys
+    const db = await dbPromise;
+    await db.executeSql(`drop table if exists words `); // ✅ Enable foreign keys
   //   console.log('🟢 Initializing database...')  ;
   //    // ✅ Insert default words if table is empty
     
@@ -53,9 +54,10 @@ export const initializeDatabase = async () => {
  */
 export const insertDefaultWords = async () => {
   try {
+    const db = await dbPromise;
     await Promise.all(
       defaultWords.map((word) =>
-        db.runAsync(
+        db.executeSql(
         `INSERT INTO words (id, text, image, category, isFavorite, isCustom, isDefault, isActive, orderIndex, lastUsed)
          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
         [
@@ -84,13 +86,14 @@ export const insertDefaultWords = async () => {
  * 🟢 Fetches Words Based on Active Status
  */
 export const getWordsFromDatabase = async (includeInactive = false): Promise<CommunicationItem[]> => {
-  await db.execAsync(`drop table if exists words `);
+  const db = await dbPromise;
+  await db.executeSql(`drop table if exists words `);
   try {
-    const result = await db.getAllAsync(
+    const [result] = await db.executeSql(
       `SELECT * FROM words WHERE isActive IN (${includeInactive ? '0,1' : '1'});`
     );
 
-    return result.map((row: any) => ({
+    return result.rows.raw().map((row: any) => ({
       id: `${row.id}`, // ✅ Ensure ID is a string
       text: row.text,
       image: `../../assets/images/${row.image}.png`, // ✅ Ensure correct file paths
@@ -112,9 +115,10 @@ export const getWordsFromDatabase = async (includeInactive = false): Promise<Com
 
 export const getInactiveWordsFromDatabase = async (): Promise<CommunicationItem[]> => {
   try {
-    const result = await db.getAllAsync(`SELECT * FROM words WHERE isActive = 0;`);
+    const db = await dbPromise;
+    const [result] = await db.executeSql(`SELECT * FROM words WHERE isActive = 0;`);
 
-    return result.map((row: any) => ({
+    return result.rows.raw().map((row: any) => ({
       id: row.id,
       text: row.text,
       image: row.image,
@@ -139,7 +143,8 @@ export const getInactiveWordsFromDatabase = async (): Promise<CommunicationItem[
  */
 export const addWordToDatabase = async (word: CommunicationItem) => {
   try {
-    await db.runAsync(
+    const db = await dbPromise;
+    await db.executeSql(
       `INSERT INTO words (id, text, image, category, isFavorite, isCustom, isDefault, isActive, orderIndex, lastUsed) 
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
@@ -167,7 +172,8 @@ export const addWordToDatabase = async (word: CommunicationItem) => {
  */
 export const deactivateWordInDatabase = async (id: string): Promise<void> => {
   try {
-    await db.runAsync(`UPDATE words SET isActive = 0 WHERE id = ?;`, [id]);
+    const db = await dbPromise;
+    await db.executeSql(`UPDATE words SET isActive = 0 WHERE id = ?;`, [id]);
     console.log(`✅ Word deactivated: ${id}`);
   } catch (error) {
     console.error('🔴 Error deactivating word:', error);
@@ -179,7 +185,8 @@ export const deactivateWordInDatabase = async (id: string): Promise<void> => {
  */
 export const reactivateWordInDatabase = async (id: string): Promise<void> => {
   try {
-    await db.runAsync(`UPDATE words SET isActive = 1 WHERE id = ?;`, [id]);
+    const db = await dbPromise;
+    await db.executeSql(`UPDATE words SET isActive = 1 WHERE id = ?;`, [id]);
     console.log(`✅ Word reactivated: ${id}`);
   } catch (error) {
     console.error('🔴 Error reactivating word:', error);
@@ -193,11 +200,12 @@ export const reactivateWordInDatabase = async (id: string): Promise<void> => {
  */
 export const resetWordsToDefault = async () => {
   try {
+    const db = await dbPromise;
       // ✅ Activate all default words
-      await db.execAsync(`UPDATE words SET isActive = 1 WHERE isDefault = 1;`);
+      await db.executeSql(`UPDATE words SET isActive = 1 WHERE isDefault = 1;`);
 
       // ✅ Deactivate all caregiver-added words
-      await db.execAsync(`UPDATE words SET isActive = 0 WHERE isDefault = 0;`);
+      await db.executeSql(`UPDATE words SET isActive = 0 WHERE isDefault = 0;`);
 
     console.log('✅ Reset complete: Defaults active, custom words inactive.');
   } catch (error) {
