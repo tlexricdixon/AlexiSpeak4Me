@@ -18,16 +18,20 @@ import { CommunicationItem } from '../interfaces/CommunicationItem';
 const CommunicationScreen: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-
+  // 🟢 Optimize category processing using `useMemo`
+  const words = useSelector((state: RootState) => state.words.words);
+  const categorizedWords = useMemo(() => {
+    const communicationItems: CommunicationItem[] = words.map(word => ({
+      ...word,
+      order: 0, // or any default value
+      lastUsed: new Date().getTime(), // or any default value
+      accessibilityLabel: word.text, // or any appropriate value
+    }));
+    return getCategorizedWords(communicationItems);
+  }, [words]);
   // ✅ Ensure words load on component mount
   useEffect(() => {
     syncDatabaseWithRedux(dispatch);
-  }, [dispatch]);
-
-  // 🟢 Optimize category processing using `useMemo`
-  const categorizedWords = useMemo(() => getCategorizedWords(active), [active]);
-  useEffect(() => {
-    dispatch(syncDatabaseWithRedux());
   }, [dispatch]);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

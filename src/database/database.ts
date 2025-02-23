@@ -1,9 +1,9 @@
-import SQLite from 'react-native-sqlite-storage';
+import SQLite from 'react-native-sqlite-2';
+import { SQLTransaction, SQLResultSet, SQLError } from 'react-native-sqlite-2';
+import { CommunicationItem } from '../interfaces/CommunicationItem';
 
 const db = SQLite.openDatabase(
-  { name: 'words.db', location: 'default' },
-  () => console.log('Database opened successfully'),
-  (error) => console.error('Error opening database:', error)
+  'words.db'
 );
 
 export const initializeDatabase = () => {
@@ -21,13 +21,17 @@ export const initializeDatabase = () => {
       );`,
       [],
       () => console.log('Words table created'),
-      (error) => console.error('Error creating words table:', error)
+      (error: any) => {
+        console.error('Error creating words table:', error);
+        return false;
+      }
     );
   });
 };
 
-export const insertWord = (word: any) => {
-  db.transaction((tx) => {
+
+export const insertWord = (word: CommunicationItem) => {
+  db.transaction((tx: SQLTransaction) => {
     tx.executeSql(
       `INSERT INTO words (id, text, image, category, isFavorite, isCustom, isDefault, isActive) 
        VALUES (?, ?, ?, ?, ?, ?, ?, ?);`,
@@ -39,21 +43,44 @@ export const insertWord = (word: any) => {
         word.isFavorite ? 1 : 0,
         word.isCustom ? 1 : 0,
         word.isDefault ? 1 : 0,
-        word.isActive ? 1 : 0,
+        word.isActive ? 1 : 0
       ],
       () => console.log('Word inserted successfully'),
-      (error) => console.error('Error inserting word:', error)
+      (error: any) => {
+        console.error('Error inserting word:', error);
+        return false;
+      }
     );
   });
 };
 
 export const getWords = (callback: (words: any[]) => void) => {
   db.transaction((tx) => {
+    interface WordRow {
+      id: string;
+      text: string;
+      image: string;
+      category: string;
+      isFavorite: number;
+      isCustom: number;
+      isDefault: number;
+      isActive: number;
+    }
+
     tx.executeSql(
       'SELECT * FROM words WHERE isActive = 1;',
       [],
-      (_, result) => callback(result.rows.raw()),
-      (error) => console.error('Error fetching words:', error)
+      (_, result: SQLResultSet) => {
+        const rows: WordRow[] = [];
+        for (let i = 0; i < result.rows.length; i++) {
+          rows.push(result.rows.item(i) as WordRow);
+        }
+        callback(rows);
+      },
+      (error: any) => {
+        console.error('Error fetching words:', error);
+        return false;
+      }
     );
   });
 };

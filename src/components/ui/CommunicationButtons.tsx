@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { GestureDetector, Gesture } from 'react-native-gesture-handler';
-import * as Speech from 'react-native-tts';
+import * as Speech from 'expo-speech';
 import { CommunicationItem } from '../../interfaces/CommunicationItem';
 
 /**

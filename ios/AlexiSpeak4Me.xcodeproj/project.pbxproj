@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
-		246350976354435BF787D8D6 /* libPods-AlexiSpeak4Me.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 483321DE7AC02FFF80E0BA23 /* libPods-AlexiSpeak4Me.a */; };
 		761780ED2CA45674006654EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 761780EC2CA45674006654EE /* AppDelegate.swift */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		A6773A5C15806F6D1A243D35 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
+		A6990B3F26F14B07938DC848 /* libPods-AlexiSpeak4Me.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A93689FDFFA4E7528CA7080 /* libPods-AlexiSpeak4Me.a */; };
 		DC4611A52D6A729C006E2CD0 /* libReact-Core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC4611A42D6A729C006E2CD0 /* libReact-Core.a */; };
 /* End PBXBuildFile section */
 
@@ -20,11 +20,11 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = AlexiSpeak4Me/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = AlexiSpeak4Me/Info.plist; sourceTree = "<group>"; };
 		13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = PrivacyInfo.xcprivacy; path = AlexiSpeak4Me/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		483321DE7AC02FFF80E0BA23 /* libPods-AlexiSpeak4Me.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlexiSpeak4Me.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		727911CB9D05AFC6F92B1D08 /* Pods-AlexiSpeak4Me.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlexiSpeak4Me.debug.xcconfig"; path = "Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me.debug.xcconfig"; sourceTree = "<group>"; };
+		302E3B0C816C6690703AAFAD /* Pods-AlexiSpeak4Me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlexiSpeak4Me.release.xcconfig"; path = "Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me.release.xcconfig"; sourceTree = "<group>"; };
+		478ED10EC170359A544E5BCC /* Pods-AlexiSpeak4Me.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlexiSpeak4Me.debug.xcconfig"; path = "Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me.debug.xcconfig"; sourceTree = "<group>"; };
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = AlexiSpeak4Me/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = AlexiSpeak4Me/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		96CF5CF992C6EE420A726249 /* Pods-AlexiSpeak4Me.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AlexiSpeak4Me.release.xcconfig"; path = "Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me.release.xcconfig"; sourceTree = "<group>"; };
+		9A93689FDFFA4E7528CA7080 /* libPods-AlexiSpeak4Me.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-AlexiSpeak4Me.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC4611A42D6A729C006E2CD0 /* libReact-Core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libReact-Core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -35,7 +35,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DC4611A52D6A729C006E2CD0 /* libReact-Core.a in Frameworks */,
-				246350976354435BF787D8D6 /* libPods-AlexiSpeak4Me.a in Frameworks */,
+				A6990B3F26F14B07938DC848 /* libPods-AlexiSpeak4Me.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -59,7 +59,7 @@
 			children = (
 				DC4611A42D6A729C006E2CD0 /* libReact-Core.a */,
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				483321DE7AC02FFF80E0BA23 /* libPods-AlexiSpeak4Me.a */,
+				9A93689FDFFA4E7528CA7080 /* libPods-AlexiSpeak4Me.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -96,8 +96,8 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				727911CB9D05AFC6F92B1D08 /* Pods-AlexiSpeak4Me.debug.xcconfig */,
-				96CF5CF992C6EE420A726249 /* Pods-AlexiSpeak4Me.release.xcconfig */,
+				478ED10EC170359A544E5BCC /* Pods-AlexiSpeak4Me.debug.xcconfig */,
+				302E3B0C816C6690703AAFAD /* Pods-AlexiSpeak4Me.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -109,13 +109,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "AlexiSpeak4Me" */;
 			buildPhases = (
-				F7CB51EDC066C7C83FBAD093 /* [CP] Check Pods Manifest.lock */,
+				27192B5234649303D756BC8E /* [CP] Check Pods Manifest.lock */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				5CA4073D0467AE597C19E825 /* [CP] Embed Pods Frameworks */,
-				48111FD4AA695A12591BB6A1 /* [CP] Copy Pods Resources */,
+				28BAB85C92EF455EE0D52C99 /* [CP] Embed Pods Frameworks */,
+				11D59EBF87AAB90BFD949ED8 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -187,7 +187,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"$REACT_NATIVE_PATH/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"$REACT_NATIVE_PATH/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		48111FD4AA695A12591BB6A1 /* [CP] Copy Pods Resources */ = {
+		11D59EBF87AAB90BFD949ED8 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -204,24 +204,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5CA4073D0467AE597C19E825 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F7CB51EDC066C7C83FBAD093 /* [CP] Check Pods Manifest.lock */ = {
+		27192B5234649303D756BC8E /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -243,6 +226,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		28BAB85C92EF455EE0D52C99 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AlexiSpeak4Me/Pods-AlexiSpeak4Me-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -259,7 +259,7 @@
 /* Begin XCBuildConfiguration section */
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 727911CB9D05AFC6F92B1D08 /* Pods-AlexiSpeak4Me.debug.xcconfig */;
+			baseConfigurationReference = 478ED10EC170359A544E5BCC /* Pods-AlexiSpeak4Me.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -289,7 +289,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 96CF5CF992C6EE420A726249 /* Pods-AlexiSpeak4Me.release.xcconfig */;
+			baseConfigurationReference = 302E3B0C816C6690703AAFAD /* Pods-AlexiSpeak4Me.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

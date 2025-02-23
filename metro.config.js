@@ -1,4 +1,4 @@
-const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
+const { getDefaultConfig, mergeConfig } = require('@react-native/metro-config');
 
 /**
  * Metro configuration
@@ -6,6 +6,20 @@ const {getDefaultConfig, mergeConfig} = require('@react-native/metro-config');
  *
  * @type {import('@react-native/metro-config').MetroConfig}
  */
-const config = {};
 
-module.exports = mergeConfig(getDefaultConfig(__dirname), config);
+// ✅ Default Metro configuration
+const defaultConfig = getDefaultConfig(__dirname);
+
+// ✅ Custom configuration additions
+const customConfig = {
+  resolver: {
+    sourceExts: [...defaultConfig.resolver.sourceExts, 'jsx', 'js', 'ts', 'tsx'], // 🛠 Ensure Metro compiles TypeScript & JS properly
+  },
+  transformer: {
+    babelTransformerPath: require.resolve('react-native-typescript-transformer'),
+  },
+};
+
+// ✅ Merge and export the final configuration
+module.exports = mergeConfig(defaultConfig, customConfig);
+
